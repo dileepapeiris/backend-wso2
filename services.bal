@@ -79,10 +79,24 @@ service http:InterceptableService / on new http:Listener(9090) {
 
 
 
-
-
-
-public function createInterceptors() returns http:Interceptor[] =>
-        [ new ErrorInterceptor()];
 }
+
+
+service class ErrorInterceptor {
+    *http:ResponseErrorInterceptor;
+
+    remote function interceptResponseError(error err, http:RequestContext ctx) returns http:BadRequest|error {
+
+       
+        if err is http:PayloadBindingError {
+            string customError = string `Payload binding failed!`;
+            log:printError(customError, err);
+            return {
+                body: {
+                    message: customError
+                }
+            };
+        }
+        return err;
+    }
 }
