@@ -79,4 +79,23 @@ public isolated function deleteParticipantByNicNumber(string nicNumber) returns 
 }
 
 
+# Update a participant's details.
+# # + participant - Object containing complete details of the participant
+# # + nicNumber - The NIC number of the participant to update.
+public isolated function updateParticipantByNicNumber(CreateParticipantPayload participant, string nicNumber) returns string|error {
+    sql:ExecutionResult|error result = databaseClient->execute(updateParticipantByNicNumberQuery(participant, nicNumber));
+
+    if result is error {
+        return result;
+    }
+
+    if result.affectedRowCount == 0 {
+        return error("No participant found with NIC Number: " + nicNumber);
+    }
+
+    return "Participant with NIC Number " + nicNumber + " updated successfully.";
+}
+
+
+
 
