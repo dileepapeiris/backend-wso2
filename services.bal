@@ -11,10 +11,10 @@ service http:InterceptableService / on new http:Listener(9090) {
     
     resource function post addParticipant(http:RequestContext ctx, db:CreateParticipantPayload participant) 
     returns AddParticipantResponse|http:InternalServerError|http:Conflict {
-    int|error participantId = db:addParticipant(participant, "admin");
+   string|error addResult = db:addParticipant(participant, "admin");
 
-    if participantId is error {
-        string errorMessage = participantId.message();
+    if addResult is error {
+        string errorMessage = "Failed to update participant";
 
         
        if errorMessage.indexOf("already exists") >= 0 {
@@ -98,7 +98,7 @@ service http:InterceptableService / on new http:Listener(9090) {
     // delete: Delete a participant by their NIC number
     // This function deletes a participant from the database based on their NIC number.
     resource function delete deleteParticipantByNicNumber(http:RequestContext ctx, string nicNumber) 
-    returns http:Ok|http:InternalServerError {
+    returns DeleteParticipantResponse|http:InternalServerError {
     string|error deleteResult = db:deleteParticipantByNicNumber(nicNumber);
 
     if deleteResult is error {

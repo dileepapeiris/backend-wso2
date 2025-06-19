@@ -3,5 +3,9 @@ public type AddParticipantResponse record {|
 |};
 
 public type UpdateParticipantResponse record {|
-    int participantId;
+     string message;
+|};
+
+public type DeleteParticipantResponse record {|
+    string message;
 |};
