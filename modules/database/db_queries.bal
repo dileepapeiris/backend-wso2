@@ -30,4 +30,8 @@ isolated function getAllParticipantsQuery() returns sql:ParameterizedQuery {
 isolated function getParticipantByNameQuery(string name) returns sql:ParameterizedQuery {
     return `SELECT * FROM participant WHERE name = ${name}`;
 }
+# Query to get a participant by their NIC number.
+isolated function getParticipantByNicNumberQuery(string nicNumber) returns sql:ParameterizedQuery {
+    return `SELECT * FROM participant WHERE nic_number = ${nicNumber}`;
+}
 
