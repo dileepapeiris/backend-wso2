@@ -51,3 +51,15 @@ public isolated function getParticipantByName(string name) returns Participant|e
    
 }
 
+# Get a participant by their NIC number.
+# # + nicNumber - The NIC number of the participant to search for.
+public isolated function getParticipantByNicNumber(string nicNumber) returns Participant|error {
+   Participant|error participant = databaseClient->queryRow(getParticipantByNicNumberQuery(nicNumber));
+    if participant is error && participant is sql:NoRowsError {
+        return error("Participant not found with NIC Number: " + nicNumber);
+    }
+    return participant;
+   
+}
+
+
