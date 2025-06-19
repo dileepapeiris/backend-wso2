@@ -20,12 +20,10 @@ isolated function addParticipantQuery(
         ${createdBy}
     )`;
 }
-
 # Query to get details about all participants in the participant table.
 isolated function getAllParticipantsQuery() returns sql:ParameterizedQuery {
     return `SELECT * FROM participant`;
 }
-
 # Query to get a participant by their name.
 isolated function getParticipantByNameQuery(string name) returns sql:ParameterizedQuery {
     return `SELECT * FROM participant WHERE name = ${name}`;
