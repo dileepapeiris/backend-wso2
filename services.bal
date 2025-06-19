@@ -7,7 +7,10 @@ import backend_wso2.database as db;
 service http:InterceptableService / on new http:Listener(9090) {
 
     // post: Add a new participant
-    resource function post addParticipant(http:RequestContext ctx, db:CreateParticipantPayload participant) returns AddParticipantResponse|http:InternalServerError|http:Conflict {
+    // This function adds a new participant to the database.
+    
+    resource function post addParticipant(http:RequestContext ctx, db:CreateParticipantPayload participant) 
+    returns AddParticipantResponse|http:InternalServerError|http:Conflict {
     int|error participantId = db:addParticipant(participant, "admin");
 
     if participantId is error {
@@ -30,10 +33,56 @@ service http:InterceptableService / on new http:Listener(9090) {
             }
         };
     }
-
     return { participantId };
-}
+
+    }
+
+    // get: Retrieve all participants
+    // This function retrieves all participants from the database.
+    // Returns an array of Participant records or an error if the retrieval fails.
+    //
+    resource function get getAll() returns db:Participant[]|http:InternalServerError { 
+            db:Participant[]|error participatArray = db:getAllParticipants();
+
+            if participatArray is error {
+                string errorMessage = "Failed to retrieve participants";
+                log:printError(errorMessage, participatArray);
+
+                return <http:InternalServerError> {
+                    body : {
+                        "message" : errorMessage
+                    }
+                };
+            }
+
+            return participatArray;
+        }
+
+    // get: Retrieve a participant by their name
+        resource function get getParticipantByName(http:RequestContext ctx, string name) 
+        returns db:Participant|http:InternalServerError{
+        db:Participant|error participant = db:getParticipantByName(name);
+
+        if participant is error {
+            string errorMessage = "Failed to retrieve participant with name: " + name;
+            log:printError(errorMessage, participant);
+
+            return <http:InternalServerError> {
+                body : {
+                    "message" : errorMessage
+                }
+            };
+        }
+
+        return participant;
+    }
+
+
+
+
+
 
 public function createInterceptors() returns http:Interceptor[] =>
         [ new ErrorInterceptor()];
+}
 }
