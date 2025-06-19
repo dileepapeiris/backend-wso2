@@ -81,7 +81,8 @@ service http:InterceptableService / on new http:Listener(9090) {
 
 }
 
-
+// Error interceptor to handle payload binding errors
+// This service intercepts errors related to payload binding and returns a custom error response.
 service class ErrorInterceptor {
     *http:ResponseErrorInterceptor;
 
