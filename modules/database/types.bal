@@ -16,3 +16,10 @@ type ParticipantDatabaseConfig  record {|
 |};
 
 
+# Participant creation payload
+public type CreateParticipantPayload record {|
+    string name;
+    string nicNumber;
+    string? email;
+    
+|};
