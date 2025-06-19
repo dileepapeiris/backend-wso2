@@ -76,6 +76,28 @@ service http:InterceptableService / on new http:Listener(9090) {
 
         return participant;
     }
+    // delete participant by nic number
+     resource function get getParticipantByNicNumber(http:RequestContext ctx, string nicNumber)
+      returns db:Participant|http:InternalServerError{
+        db:Participant|error participant = db:getParticipantByNicNumber(nicNumber);
+
+        if participant is error {
+            string errorMessage = "Failed to retrieve participant with NIC Number: " + nicNumber;
+            log:printError(errorMessage, participant);
+
+            return <http:InternalServerError> {
+                body : {
+                    "message" : errorMessage
+                }
+            };
+        }
+
+        return participant;
+    }
+
+
+
+
 
 
 
