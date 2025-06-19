@@ -9,3 +9,10 @@ type DatabaseConfig record {|
     string host;
     int port;
 |};
+
+type ParticipantDatabaseConfig  record {|
+    *DatabaseConfig;
+    mysql:Options? options;
+|};
+
+
