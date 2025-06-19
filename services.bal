@@ -95,6 +95,30 @@ service http:InterceptableService / on new http:Listener(9090) {
         return participant;
     }
 
+    // delete: Delete a participant by their NIC number
+    // This function deletes a participant from the database based on their NIC number.
+    resource function delete deleteParticipantByNicNumber(http:RequestContext ctx, string nicNumber) 
+    returns http:Ok|http:InternalServerError {
+    string|error deleteResult = db:deleteParticipantByNicNumber(nicNumber);
+
+    if deleteResult is error {
+        string errorMessage = "Failed to delete participant with NIC Number: " + nicNumber;
+        log:printError(errorMessage, deleteResult);
+
+        return <http:InternalServerError>{
+            body: {
+                message: errorMessage
+            }
+        };
+    }
+
+    return <http:Ok>{
+        body: {
+            message: deleteResult
+        }
+    };
+}
+
 
 
 
