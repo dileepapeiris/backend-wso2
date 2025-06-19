@@ -19,3 +19,23 @@ public isolated function addParticipant(CreateParticipantPayload participant, st
 
     return result.lastInsertId.ensureType();
 }
+
+#Get participants personal details.
+# # This function retrieves all participants from the database.
+# + participant - Object containing complete details of the participant 
+# 
+public isolated function getAllParticipants() returns Participant[]|error {
+    stream<Participant, sql:Error?> resultStream = 
+        databaseClient->query(getAllParticipantsQuery());
+
+   
+    Participant[] participants = [];
+
+    check from Participant p in resultStream
+        do {
+            participants.push(p);
+        };
+
+    return participants;
+}
+
