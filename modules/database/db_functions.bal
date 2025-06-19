@@ -62,4 +62,21 @@ public isolated function getParticipantByNicNumber(string nicNumber) returns Par
    
 }
 
+# Delete a participant's details.
+# # + nicNumber - The NIC number of the participant to delete.
+public isolated function deleteParticipantByNicNumber(string nicNumber) returns string|error {
+    sql:ExecutionResult|error result = databaseClient->execute(deleteParticipantByNicNumberQuery(nicNumber));
+
+    if result is error {
+        return result;
+    }
+
+    if result.affectedRowCount == 0 {
+        return error("No participant found with NIC Number: " + nicNumber);
+    }
+
+    return "Participant with NIC Number " + nicNumber + " deleted successfully.";
+}
+
+
 
