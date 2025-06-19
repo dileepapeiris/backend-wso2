@@ -11,10 +11,10 @@ service http:InterceptableService / on new http:Listener(9090) {
     
     resource function post addParticipant(http:RequestContext ctx, db:CreateParticipantPayload participant) 
     returns AddParticipantResponse|http:InternalServerError|http:Conflict {
-   string|error addResult = db:addParticipant(participant, "admin");
+    int|error participantId = db:addParticipant(participant, "admin");
 
-    if addResult is error {
-        string errorMessage = "Failed to update participant";
+    if participantId is error {
+        string errorMessage = participantId.message();
 
         
        if errorMessage.indexOf("already exists") >= 0 {
@@ -98,7 +98,7 @@ service http:InterceptableService / on new http:Listener(9090) {
     // delete: Delete a participant by their NIC number
     // This function deletes a participant from the database based on their NIC number.
     resource function delete deleteParticipantByNicNumber(http:RequestContext ctx, string nicNumber) 
-    returns DeleteParticipantResponse|http:InternalServerError {
+    returns http:Ok|http:InternalServerError {
     string|error deleteResult = db:deleteParticipantByNicNumber(nicNumber);
 
     if deleteResult is error {
@@ -120,7 +120,7 @@ service http:InterceptableService / on new http:Listener(9090) {
 }
     // update participant by nic number
     resource function put updateParticipantByNicNumber(http:RequestContext ctx, string nicNumber, db:CreateParticipantPayload participant) 
-    returns UpdateParticipantResponse|http:InternalServerError {
+    returns http:Ok|http:InternalServerError {
         string|error updateResult = db:updateParticipantByNicNumber(participant, nicNumber);
 
         if updateResult is error {
@@ -140,6 +140,12 @@ service http:InterceptableService / on new http:Listener(9090) {
             }
         };
     }
+
+
+    // Interceptor to handle payload binding errors
+    public function createInterceptors() returns http:Interceptor[] =>
+        [ new ErrorInterceptor()];
+
 }
 
 // Error interceptor to handle payload binding errors
