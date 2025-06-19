@@ -120,7 +120,7 @@ service http:InterceptableService / on new http:Listener(9090) {
 }
     // update participant by nic number
     resource function put updateParticipantByNicNumber(http:RequestContext ctx, string nicNumber, db:CreateParticipantPayload participant) 
-    returns http:Ok|http:InternalServerError {
+    returns UpdateParticipantResponse|http:InternalServerError {
         string|error updateResult = db:updateParticipantByNicNumber(participant, nicNumber);
 
         if updateResult is error {
