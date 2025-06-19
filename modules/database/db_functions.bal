@@ -39,3 +39,15 @@ public isolated function getAllParticipants() returns Participant[]|error {
     return participants;
 }
 
+
+# Get a participant by their name.
+# # + name - The name of the participant to search for.
+public isolated function getParticipantByName(string name) returns Participant|error {
+   Participant|error participant = databaseClient->queryRow(getParticipantByNameQuery(name));
+    if participant is error && participant is sql:NoRowsError {
+        return error("Participant not found with name: " + name);
+    }
+    return participant;
+   
+}
+
