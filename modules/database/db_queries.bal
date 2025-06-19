@@ -1,6 +1,9 @@
 import ballerina/sql;
-
 # Query to add a new participant in the participant table.
+#
+# + participant - Object containing complete details of the participant.
+# + createdBy - The user who created the participant.
+# + return - sql:ParameterizedQuery 
 isolated function addParticipantQuery(
     CreateParticipantPayload participant,
     string createdBy
@@ -17,3 +20,9 @@ isolated function addParticipantQuery(
         ${createdBy}
     )`;
 }
+
+# Query to get details about all participants in the participant table.
+isolated function getAllParticipantsQuery() returns sql:ParameterizedQuery {
+    return `SELECT * FROM participant`;
+}
+
