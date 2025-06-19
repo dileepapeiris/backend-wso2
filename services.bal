@@ -118,13 +118,28 @@ service http:InterceptableService / on new http:Listener(9090) {
         }
     };
 }
+    // update participant by nic number
+    resource function put updateParticipantByNicNumber(http:RequestContext ctx, string nicNumber, db:CreateParticipantPayload participant) 
+    returns http:Ok|http:InternalServerError {
+        string|error updateResult = db:updateParticipantByNicNumber(participant, nicNumber);
 
+        if updateResult is error {
+            string errorMessage = "Failed to update participant with NIC Number: " + nicNumber;
+            log:printError(errorMessage, updateResult);
 
+            return <http:InternalServerError>{
+                body: {
+                    message: errorMessage
+                }
+            };
+        }
 
-
-
-
-
+        return <http:Ok>{
+            body: {
+                message: updateResult
+            }
+        };
+    }
 }
 
 // Error interceptor to handle payload binding errors
