@@ -32,4 +32,8 @@ isolated function getParticipantByNameQuery(string name) returns sql:Parameteriz
 isolated function getParticipantByNicNumberQuery(string nicNumber) returns sql:ParameterizedQuery {
     return `SELECT * FROM participant WHERE nic_number = ${nicNumber}`;
 }
+# Query to delete a participant's details.
+isolated function deleteParticipantByNicNumberQuery(string nicNumber) returns sql:ParameterizedQuery {
+    return `DELETE FROM participant WHERE nic_number = ${nicNumber}`;
+}
 
