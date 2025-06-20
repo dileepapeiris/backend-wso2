@@ -1,7 +1,7 @@
-<h1 align="center" id="title">Participant Management System using Ballerina and MySQL</h1>
+<h1 align="center" id="title">WSO2 Con Registration Portal</h1>
 
 <p id="description">
-The Participant Management System is a backend API service developed using Ballerina and MySQL. It is designed to efficiently manage participant data using their NIC (National Identity Card) number. The system provides secure and well-structured endpoints to perform standard CRUD operations (Create, Read, Update, Delete) on participant records.
+The WSO2 Con Registration Portal is with a backend API service developed using Ballerina and MySQL. It is designed to efficiently manage participant data using their NIC (National Identity Card) number. The system provides secure and well-structured endpoints to perform standard CRUD operations (Create, Read, Update, Delete) on participant records.
 </p>
 
 ---
