@@ -6,47 +6,36 @@ The Participant Management System is a backend API service developed using Balle
 
 ---
 
-## ✅ Prerequisites
+##  Prerequisites
 
 - Ballerina
 - MySQL Database
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
-BACKEND-WSO2/
-├── MODULES/
-│ └── database/
-│ ├── client.bal
-│ ├── db_functions.bal
-│ ├── db_queries.bal
-│ └── types.bal
-├── Resources/
-│ └── database/
-│ └── database.sql
-├── services.bal
-├── types.bal
-└── Config.toml
+![image](https://github.com/user-attachments/assets/9f1e838e-09f2-4583-a174-ec3e907dbe05)
+
 
 
 ---
 
-## 📌 API Endpoints
+##  API Endpoints
 
 | Action                | Method | Endpoint                                                     |
 |-----------------------|--------|---------------------------------------------------------------|
-| ➕ Add Participant     | POST   | `http://localhost:9090/addParticipant`                        |
-| 📄 View All           | GET    | `http://localhost:9090/getAll`                                |
-| ❌ Delete by NIC      | DELETE | `http://localhost:9090/deleteParticipantByNIC`                |
-| ❌ Delete by Name     | DELETE | `http://localhost:9090/deleteParticipantByName`               |
-| 🔍 Search by NIC      | GET    | `http://localhost:9090/getParticipantByNicNumber`             |
-| 🔍 Search by Name     | GET    | `http://localhost:9090/getParticipantByName`                  |
-| 🔁 Update by NIC      | PUT    | `http://localhost:9090/updateParticipantByNicNumber`          |
+|  Add Participant     | POST   | `http://localhost:9090/addParticipant`                        |
+|  View All           | GET    | `http://localhost:9090/getAll`                                |
+|  Delete by NIC      | DELETE | `http://localhost:9090/deleteParticipantByNIC`                |
+|  Delete by Name     | DELETE | `http://localhost:9090/deleteParticipantByName`               |
+|  Search by NIC      | GET    | `http://localhost:9090/getParticipantByNicNumber`             |
+|  Search by Name     | GET    | `http://localhost:9090/getParticipantByName`                  |
+|  Update by NIC      | PUT    | `http://localhost:9090/updateParticipantByNicNumber`          |
 
 ---
 
-## 🚀 Project Setup Instructions
+##  Project Setup Instructions
 
 1. **Create the Database Table**
 
@@ -63,7 +52,7 @@ BACKEND-WSO2/
      PRIMARY KEY (`participant_id`)
    );
 
-2. Configure the Project
+2. **Configure the Project**
 
    Update the Config.toml file with your MySQL database connection details:
 
@@ -74,8 +63,8 @@ BACKEND-WSO2/
     password = "your-password"
     database = "your-database-name"
 
-3. Run the Project
+3. **Run the Project**
 
-Navigate to the project root and run:
+    Navigate to the project root and run:
 
-    bal run
+        bal run
